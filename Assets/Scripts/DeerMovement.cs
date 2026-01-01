@@ -95,6 +95,7 @@ public class DeerMovement : MonoBehaviour
         {
             transform.localScale = new Vector3(sizeX, 1, 1);
         }
+        
         else 
         {
             // If standing still, keep facing the current direction but apply the squish
