@@ -5,7 +5,6 @@ A 2D Action-Platformer based on Malaysian folklore, built in Unity.
 * **Move:** A / D
 * **Jump:** Space (Double Jump unlocked)
 * **Crouch:** S
-* **Attack:** F (Purify Shot) - *Coming Soon*
 
 ## 🛠️ Tech Stack
 * **Engine:** Unity 2022.3 (2D)
