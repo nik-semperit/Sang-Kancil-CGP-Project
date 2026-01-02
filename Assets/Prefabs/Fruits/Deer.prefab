@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5271216183326120951}
   - component: {fileID: 92536419786229913}
   m_Layer: 0
-  m_Name: Deer_Level3
+  m_Name: Deer
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

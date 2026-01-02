@@ -946,7 +946,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8636354627367281603}
   m_Layer: 0
-  m_Name: nigga bg
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
