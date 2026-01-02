@@ -1,23 +1,27 @@
 ﻿using UnityEngine;
 
-public class CrocMove : MonoBehaviour
+public class CrocMove2 : MonoBehaviour
 {
     public float speed = 2f;
-    public Transform endPoint;     // LEFT side
-    [HideInInspector] public CrocSpawner2 spawner;
+    public Transform endPoint;
+
+    float waterY;
+
+    void Start()
+    {
+        waterY = transform.position.y;
+    }
 
     void Update()
     {
         transform.position = Vector2.MoveTowards(
             transform.position,
-            endPoint.position,
+            new Vector2(endPoint.position.x, waterY),
             speed * Time.deltaTime
         );
 
-        // When reach left end → despawn
-        if (Vector2.Distance(transform.position, endPoint.position) < 0.05f)
+        if (Vector2.Distance(transform.position, endPoint.position) < 0.1f)
         {
-            spawner.Respawn();
             Destroy(gameObject);
         }
     }
