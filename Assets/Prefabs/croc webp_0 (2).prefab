@@ -14,7 +14,8 @@ GameObject:
   - component: {fileID: 8366656259596848558}
   - component: {fileID: 6097858636138169124}
   - component: {fileID: 4157631596515854362}
-  m_Layer: 0
+  - component: {fileID: -7176858163886832715}
+  m_Layer: 8
   m_Name: croc webp_0 (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 8986764256272587835}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.40712, y: -2.5698662, z: 0}
+  m_LocalPosition: {x: 130.40712, y: -2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -124,7 +125,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8986764256272587835}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -142,7 +143,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 6
 --- !u!61 &6097858636138169124
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -181,7 +182,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 4.4466667, y: 2.5466666}
+    oldSize: {x: 6.67, y: 3.82}
     newSize: {x: 6.67, y: 3.82}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -203,4 +204,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CrocMove
   speed: 2
   endPoint: {fileID: 0}
-  spawner: {fileID: 0}
+--- !u!114 &-7176858163886832715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986764256272587835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e30d33970d46a84aa3fb5f53b8ef4e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform2
