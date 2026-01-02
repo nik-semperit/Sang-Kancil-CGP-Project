@@ -41,28 +41,25 @@ public class DeerMovement : MonoBehaviour
             originalHeight = standingCollider.size.y;
     }
 
-    // --- UPDATE LOOP STARTS ---
     void Update()
     {
         // 1. INPUT & PHYSICS CHECKS
         float moveInput = Input.GetAxisRaw("Horizontal");
         bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
-        // --- DOUBLE JUMP RESET LOGIC ---
         if (isGrounded)
         {
             extraJumps = extraJumpsValue;
         }
 
         // 2. MOVEMENT LOGIC
-        // Only move if NOT crouching (Optional: prevents sliding while ducking)
         if (!anim.GetBool("IsCrouching")) 
         {
             rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
         }
         else 
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Stop moving if crouching
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
 
         // 3. JUMP LOGIC
@@ -79,69 +76,56 @@ public class DeerMovement : MonoBehaviour
             }
         }
         
-// 4. FLIPPING & SQUISHING (Fixed Logic)
-        
-        // A. Determine the base size (Squished if crouching, Normal if standing)
-        // We use the boolean directly from the Animator to know if we are crouching
-        float sizeX = anim.GetBool("IsCrouching") ? 0.7125f : 1f; 
+        // 4. FLIPPING & SQUISHING (FIXED LOGIC)
 
-        // B. Apply Direction + Size
-        // Note: Your original code used -1 for Right, so I kept that logic.
+        // A. Handle Squish (Crouching) - ALWAYS KEEP SCALE POSITIVE
+        // We stop using negative scale for direction here. Scale is only for size.
+        float currentSizeX = anim.GetBool("IsCrouching") ? 0.7125f : 1f; 
+        transform.localScale = new Vector3(currentSizeX, 1, 1); 
+
+        // B. Handle Direction (Rotation)
+        // Rotating the Y-axis moves the child objects (mouth box) along with the sprite.
         if (moveInput > 0) // Moving Right
         {
-            transform.localScale = new Vector3(-sizeX, 1, 1);
+            // Rotate 180 degrees to face Right (since your art faces Left by default)
+            transform.rotation = Quaternion.Euler(0, 180, 0);
         }
         else if (moveInput < 0) // Moving Left
         {
-            transform.localScale = new Vector3(sizeX, 1, 1);
+            // Rotate back to 0 (Default Left)
+            transform.rotation = Quaternion.Euler(0, 0, 0);
         }
-        else 
-        {
-            // If standing still, keep facing the current direction but apply the squish
-            // Math.Sign gets the current direction (-1 or 1)
-            float currentDir = Mathf.Sign(transform.localScale.x);
-            transform.localScale = new Vector3(currentDir * Mathf.Abs(sizeX), 1, 1);
-        }
+        // If moveInput is 0, we do nothing, so it stays facing the last direction.
 
         
         // 5. UPDATE ANIMATOR   
         anim.SetFloat("Speed", Mathf.Abs(moveInput)); 
         anim.SetBool("IsGrounded", isGrounded);
 
-        // Crouch Logic here
+        // Crouch Logic
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            // Shrink
             if (standingCollider != null)
             {
                 Vector2 size = standingCollider.size;
                 size.y = crouchHeight; 
                 standingCollider.size = size;
-                
                 standingCollider.offset = new Vector2(0, (crouchHeight - originalHeight) / 2);
             }
-
-            // Play Animation
             anim.SetBool("IsCrouching", true);
         }
         else 
         {
-            // Stand up for second phase of animation
             if (standingCollider != null)
             {
                 Vector2 size = standingCollider.size;
                 size.y = originalHeight;
                 standingCollider.size = size;
-                standingCollider.offset = Vector2.zero; // Reset
+                standingCollider.offset = Vector2.zero;
             }
-
             anim.SetBool("IsCrouching", false);
         }
-
-    } // <--- THIS BRACKET WAS MISSING/WRONG! UPDATE ENDS HERE.
-
-
-    // --- FUNCTIONS OUTSIDE UPDATE ---
+    } 
 
     void PerformJump()
     {
@@ -166,5 +150,4 @@ public class DeerMovement : MonoBehaviour
         float randomX = Random.Range(-bounceSideForce, bounceSideForce);
         rb.AddForce(new Vector2(randomX, bounceForce), ForceMode2D.Impulse);
     }
-
-} // CLASS ENDS
+}
