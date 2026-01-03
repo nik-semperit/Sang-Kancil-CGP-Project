@@ -25,8 +25,7 @@ public class EnemyProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             // Kill the player (Reuse your existing Game Over logic)
-            FindObjectOfType<GameManager>().TriggerGameOver();
-            
+            GameManagerReworked.Instance.TriggerGameOver();            
             // Destroy Bullet
             Destroy(gameObject);
         }
