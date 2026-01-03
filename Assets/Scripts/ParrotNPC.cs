@@ -7,6 +7,10 @@ public class ParrotNPC : MonoBehaviour
     public GameObject interactPrompt;   // Drag "Press F" Text here
     public GameObject player;           // Drag Deer here
 
+    [Header("Rewards")]
+    public GameObject potionPrefab;    // Drag your Health Potion Prefab here
+    public Transform rewardSpawnPoint; // Drag an empty object where you want it to drop
+
     private bool playerInRange;
 
     void Update()
@@ -23,7 +27,7 @@ public class ParrotNPC : MonoBehaviour
                 "Speed Buff (+Move)",    // Option A Label
                 "Health Buff (+1 HP)",   // Option B Label
                 GiveSpeedBuff,           // Action A
-                GiveHealthBuff           // Action B
+                GiveJumpBuff           // Action B
             );
         }
     }
@@ -31,20 +35,38 @@ public class ParrotNPC : MonoBehaviour
     // --- THE BUFF FUNCTIONS (With Debugs) ---
     void GiveSpeedBuff()
     {
-        // Check your Console (Bottom Left) for this message!
-        Debug.Log("⚡ SPEED BUFF APPLIED! (Code is working)");
-        
-        // TODO: Add actual speed logic here later
-        // Example: player.GetComponent<PlayerMovement>().speed += 5;
+        // 1. Find the script on the player
+        // CHANGE "PlayerMovement" to the actual name of your movement script file
+        var movement = player.GetComponent<DeerMovement>();
+
+        if (movement != null)
+        {
+            // 2. Add speed
+            // CHANGE "moveSpeed" to the variable name you use for speed inside that script
+            movement.moveSpeed += 5f; 
+
+            Debug.Log("⚡ SPEED BUFF APPLIED! New Speed: " + movement.moveSpeed);
+        }
+        else
+        {
+            Debug.LogError("Check the code! I couldn't find the PlayerMovement script on the Deer.");
+        }
     }
 
-    void GiveHealthBuff()
+    void GiveJumpBuff()
     {
-        // Check your Console (Bottom Left) for this message!
-        Debug.Log("❤️ HEALTH BUFF APPLIED! (Code is working)");
-
-        // TODO: Add actual health logic here later
-        // Example: player.GetComponent<Health>().Heal(1);
+        // Check if we forgot to link the prefab
+        if (potionPrefab != null && rewardSpawnPoint != null)
+        {
+            // Spawn the potion at the specific point, with no rotation
+            Instantiate(potionPrefab, rewardSpawnPoint.position, Quaternion.identity);
+            
+            Debug.Log("❤️ JUMP POTION SPAWNED! Go pick it up.");
+        }
+        else
+        {
+            Debug.LogError("Error: You forgot to drag the Potion Prefab or Spawn Point into the Parrot Script!");
+        }
     }
 
     // --- PROXIMITY LOGIC ---
