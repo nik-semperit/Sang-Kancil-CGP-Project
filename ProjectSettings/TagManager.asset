@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Grids
+  - Enemy
   layers:
   - Default
   - TransparentFX
