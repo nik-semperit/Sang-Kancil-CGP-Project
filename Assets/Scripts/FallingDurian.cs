@@ -9,12 +9,16 @@ public class FallingDurian : MonoBehaviour
         {
             Debug.Log("💥 BONK! Durian hit the deer!");
             
-            // If you have a health script, call it here:
-            // collision.gameObject.GetComponent<Health>().TakeDamage(1);
+            // Trigger the Game Over screen
+            if (GameManagerReworked.Instance != null)
+            {
+                GameManagerReworked.Instance.TriggerGameOver();
+            }
         }
 
-        // 2. Destroy the Durian shortly after hitting ANYTHING (Ground or Player)
-        // The '1f' means wait 1 second (so it rolls a bit) then delete.
-        Destroy(gameObject, 1f);
+        // 2. Destroy the Durian shortly after hitting ANYTHING
+        Destroy(gameObject, 3f);
     }
+
+    
 }
