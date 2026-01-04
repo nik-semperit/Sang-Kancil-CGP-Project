@@ -11,8 +11,8 @@ public class WaterHazard : MonoBehaviour
             // Call the Singleton directly
             if (GameManagerReworked.Instance != null)
             {
-                GameManagerReworked.Instance.TriggerGameOver();
-            }
+            GameManagerReworked.Instance.TriggerGameOver("water");  
+            }          
         }
     }
 }

@@ -20,6 +20,6 @@ public class GameOverUI : MonoBehaviour
         Time.timeScale = 1; 
         
         // IMPORTANT: You must have a scene named "MainMenu" in your Build Settings!
-        SceneManager.LoadScene("MainMenu"); 
+        SceneManager.LoadScene("Main Menu"); 
     }
 }
