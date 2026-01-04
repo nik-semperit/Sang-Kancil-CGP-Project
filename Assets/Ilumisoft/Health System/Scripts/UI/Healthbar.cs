@@ -36,20 +36,48 @@ namespace Ilumisoft.HealthSystem.UI
 
         private void Start()
         {
-            currentValue = Health.CurrentHealth;
+            if (Health == null)
+            {
+                Health = GetComponentInParent<HealthComponent>();
+            }
+
+            if (canvas == null)
+            {
+                canvas = GetComponentInChildren<Canvas>();
+            }
+
+            if (fillImage == null)
+            {
+                fillImage = GetComponentInChildren<Image>();
+            }
         }
 
         private void Update()
         {
+            if (Health == null || fillImage == null)
+                return;
+
             if (alignWithCamera)
             {
                 AlignWithCamera();
             }
 
-            currentValue = Mathf.MoveTowards(currentValue, Health.CurrentHealth, Time.deltaTime * changeSpeed);
-            
+            currentValue = Mathf.MoveTowards(
+                currentValue,
+                Health.CurrentHealth,
+                Time.deltaTime * changeSpeed
+            );
+
             UpdateFillbar();
             UpdateVisibility();
+        }
+
+        protected virtual void Awake()
+        {
+            if (Health == null)
+            {
+                Health = GetComponentInParent<HealthComponent>();
+            }
         }
 
         private void AlignWithCamera()
