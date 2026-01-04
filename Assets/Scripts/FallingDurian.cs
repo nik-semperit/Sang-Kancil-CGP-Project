@@ -12,7 +12,7 @@ public class FallingDurian : MonoBehaviour
             // Trigger the Game Over screen
             if (GameManagerReworked.Instance != null)
             {
-                GameManagerReworked.Instance.TriggerGameOver();
+            GameManagerReworked.Instance.TriggerGameOver("durian");            
             }
         }
 
