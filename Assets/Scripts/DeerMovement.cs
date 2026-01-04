@@ -150,4 +150,31 @@ public class DeerMovement : MonoBehaviour
         float randomX = Random.Range(-bounceSideForce, bounceSideForce);
         rb.AddForce(new Vector2(randomX, bounceForce), ForceMode2D.Impulse);
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!collision.gameObject.CompareTag("Enemy"))
+            return;
+
+        // Make sure we landed ON TOP of the croc
+        foreach (ContactPoint2D contact in collision.contacts)
+        {
+            if (contact.normal.y > 0.5f)
+            {
+                CrocHealth2 croc = collision.gameObject.GetComponent<CrocHealth2>();
+
+                if (croc != null)
+                {
+                    croc.TakeDamage(10);
+                }
+
+                // Bounce deer upward
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.8f);
+                anim.SetTrigger("JumpTrigger");
+
+                break;
+            }
+        }
+    }
+
 }

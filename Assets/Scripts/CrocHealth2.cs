@@ -1,33 +1,40 @@
 using UnityEngine;
-using UnityEngine.UI;
 
-public class CrocHealth : MonoBehaviour
+public class CrocHealth2 : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
-    public Image healthFill; // from UI kit
+    public HealthBar3 healthBar;
 
     void Start()
     {
         currentHealth = maxHealth;
-        UpdateBar();
+
+        if (healthBar != null)
+        {
+            healthBar.SetMaxHealth(maxHealth);
+        }
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
-        UpdateBar();
+
+        if (healthBar != null)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
 
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            Die();
         }
     }
 
-    void UpdateBar()
+    void Die()
     {
-        healthFill.fillAmount = (float)currentHealth / maxHealth;
+        Destroy(gameObject);
     }
 }
