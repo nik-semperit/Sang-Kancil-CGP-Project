@@ -28,6 +28,8 @@ public class DeerMovement : MonoBehaviour
     public LayerMask groundLayer;
     public float checkRadius = 0.2f; 
 
+
+
     // Animation
     public Animator anim;
 
@@ -151,30 +153,56 @@ public class DeerMovement : MonoBehaviour
         rb.AddForce(new Vector2(randomX, bounceForce), ForceMode2D.Impulse);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+
+
+    private float damageCooldown = 0.5f;
+    private float damageTimer = 0f;
+
+    private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Enemy"))
             return;
 
-        // Make sure we landed ON TOP of the croc
+        // Only when deer is falling or standing
+        if (rb.linearVelocity.y > 1f)
+            return;
+
         foreach (ContactPoint2D contact in collision.contacts)
         {
+            // Check if standing on top of croc
             if (contact.normal.y > 0.5f)
             {
-                CrocHealth2 croc = collision.gameObject.GetComponent<CrocHealth2>();
+                damageTimer += Time.deltaTime;
 
-                if (croc != null)
+                if (damageTimer >= damageCooldown)
                 {
-                    croc.TakeDamage(10);
-                }
+                    CrocHealth2 crocHealth =
+                        collision.gameObject.GetComponent<CrocHealth2>();
 
-                // Bounce deer upward
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.8f);
-                anim.SetTrigger("JumpTrigger");
+                    if (crocHealth != null)
+                    {
+                        crocHealth.TakeDamage(10);
+                    }
+
+                    // small bounce
+                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.6f);
+
+                    damageTimer = 0f;
+                }
 
                 break;
             }
         }
     }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            damageTimer = 0f;
+        }
+    }
+
+
 
 }
