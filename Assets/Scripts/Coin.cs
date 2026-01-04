@@ -4,30 +4,34 @@ public class Coin : MonoBehaviour
 {
     public int scoreValue = 1;
     public AudioClip collectSound;
-    
-    [Header("Effects")]
-    public GameObject collectEffect; // <--- NEW VARIABLE
+    public GameObject collectEffect; 
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Player"))
         {
-            // 1. Add Score
-            FindObjectOfType<GameManager>().AddScore(scoreValue);
+            // Use the NEW class name "GameManagerReworked"
+            if (GameManagerReworked.Instance != null)
+            {
+                GameManagerReworked.Instance.AddScore(scoreValue);
+            }
+            else
+            {
+                Debug.LogWarning("No GameManagerReworked found! Score not added.");
+            }
 
-            // 2. Play Sound
+            // Play Sound
             if (collectSound != null)
             {
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
             }
             
-            // 3. SPAWN PARTICLES (New!)
+            // Spawn Particles
             if (collectEffect != null)
             {
                 Instantiate(collectEffect, transform.position, Quaternion.identity);
             }
             
-            // 4. Destroy object
             Destroy(gameObject);
         }
     }
