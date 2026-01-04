@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class CrocHealth2 : MonoBehaviour
@@ -5,7 +6,7 @@ public class CrocHealth2 : MonoBehaviour
     public int maxHealth = 100;
     public int currentHealth;
 
-    public HealthBar3 healthBar;
+    public HealthBar healthBar; // your slider-based UI
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class CrocHealth2 : MonoBehaviour
 
     void Die()
     {
-        Destroy(gameObject);
+        // For now just disable croc
+        gameObject.SetActive(false);
     }
 }
