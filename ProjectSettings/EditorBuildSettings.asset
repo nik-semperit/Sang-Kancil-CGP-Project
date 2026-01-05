@@ -9,8 +9,11 @@ EditorBuildSettings:
     path: Assets/Scenes/Main menu.unity
     guid: 57f4b0d9829d347479462405107f4fde
   - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: 8e48cd62584d88b43b6c18e3032adf94
+    path: Assets/Scenes/Level1_Viknes.unity
+    guid: ad62217450f70044a85dcbf1e29de732
+  - enabled: 1
+    path: Assets/Scenes/Level2.unity
+    guid: 7c472fe9244c0904480cb817185d0f41
   - enabled: 1
     path: Assets/Scenes/Level3.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
