@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Grids
   - Enemy
+  - Water
   layers:
   - Default
   - TransparentFX

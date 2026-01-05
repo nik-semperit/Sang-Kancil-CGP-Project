@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Ilumisoft.HealthSystem.UI
 {
@@ -14,6 +15,11 @@ namespace Ilumisoft.HealthSystem.UI
             {
                 Health = Player.GetComponent<HealthComponent>();
             }
+        }
+
+        internal void SetMaxHealth(int maxHealth)
+        {
+            throw new NotImplementedException();
         }
     }
 }
