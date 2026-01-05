@@ -10554,9 +10554,6 @@ MonoBehaviour:
   standingCollider: {fileID: 925780123015253136}
   crouchHeight: 0.5
   originalHeight: 0
-  dashSpeed: 20
-  dashDuration: 0.2
-  doubleTapTime: 0.3
   audioSource: {fileID: 5733108654581499728}
   jumpSound: {fileID: 8300000, guid: 70ffc72c40d2e2940b7fd8fd70ebf224, type: 3}
   hurtSound: {fileID: 8300000, guid: 277abf7dcdcbcd44ea60aa81e801696c, type: 3}
