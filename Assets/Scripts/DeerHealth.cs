@@ -1,23 +1,20 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 
 public class DeerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    private int currentHealth;
+    public int currentHealth;
 
-    public Slider healthSlider;
+    public PlayerHealthBar healthBar; // 🔥 UI reference
+
     private bool isDead = false;
 
     void Start()
     {
         currentHealth = maxHealth;
 
-        if (healthSlider != null)
-        {
-            healthSlider.maxValue = maxHealth;
-            healthSlider.value = currentHealth;
-        }
+        if (healthBar != null)
+            healthBar.SetMaxHealth(maxHealth);
     }
 
     public void TakeDamage(int damage)
@@ -27,10 +24,8 @@ public class DeerHealth : MonoBehaviour
         currentHealth -= damage;
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        if (healthSlider != null)
-        {
-            healthSlider.value = currentHealth;
-        }
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
 
         if (currentHealth <= 0)
         {
@@ -41,6 +36,12 @@ public class DeerHealth : MonoBehaviour
     void Die()
     {
         isDead = true;
-        Destroy(gameObject); // ✅ THIS WILL NOW WORK
+
+        if (GameManagerReworked.Instance != null)
+        {
+            GameManagerReworked.Instance.TriggerGameOver("Player");
+        }
+
+        Destroy(gameObject);
     }
 }
