@@ -30,6 +30,8 @@ public class DeerMovement : MonoBehaviour
 
 
 
+
+
     // Animation
     public Animator anim;
 
