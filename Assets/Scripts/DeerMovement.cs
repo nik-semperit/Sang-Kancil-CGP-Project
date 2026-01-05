@@ -5,7 +5,16 @@ public class DeerMovement : MonoBehaviour
     [Header("Crouch")]
     public BoxCollider2D standingCollider; 
     public float crouchHeight = 0.5f;      
-    public float originalHeight;           
+    public float originalHeight;
+
+    [Header("Dash")] 
+    public float dashSpeed = 20f;  
+    public float dashDuration = 0.2f; 
+    public float doubleTapTime = 0.3f; 
+    private float lastLeftTapTime; 
+    private float lastRightTapTime; 
+    private bool isDashing; 
+    private float dashTimer;
 
     [Header("Audio")]
     public AudioSource audioSource; 
@@ -48,6 +57,39 @@ public class DeerMovement : MonoBehaviour
         float moveInput = Input.GetAxisRaw("Horizontal");
         bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
 
+        // --- DASH LOGIC ---
+        if (!isDashing)
+        {
+            // Detect double-tap LEFT
+            if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
+            {
+                if (Time.time - lastLeftTapTime < doubleTapTime)
+                {
+                    StartDash(-1);
+                }
+                lastLeftTapTime = Time.time;
+            }
+
+            // Detect double-tap RIGHT
+            if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
+            {
+                if (Time.time - lastRightTapTime < doubleTapTime)
+                {
+                    StartDash(1);
+                }
+                lastRightTapTime = Time.time;
+            }
+        }
+        else
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0)
+            {
+                isDashing = false;
+            }
+        }
+
+
         // --- DOUBLE JUMP RESET LOGIC ---
         if (isGrounded)
         {
@@ -56,14 +98,18 @@ public class DeerMovement : MonoBehaviour
 
         // 2. MOVEMENT LOGIC
         // Only move if NOT crouching (Optional: prevents sliding while ducking)
-        if (!anim.GetBool("IsCrouching")) 
+        if (!isDashing) // <-- NEW check added here
         {
-            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+            if (!anim.GetBool("IsCrouching"))
+            {
+                rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+            }
+            else
+            {
+                rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Stop moving if crouching
+            }
         }
-        else 
-        {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y); // Stop moving if crouching
-        }
+
 
         // 3. JUMP LOGIC
         if (Input.GetButtonDown("Jump"))
@@ -78,9 +124,9 @@ public class DeerMovement : MonoBehaviour
                 extraJumps--; 
             }
         }
-        
-// 4. FLIPPING & SQUISHING (Fixed Logic)
-        
+
+        // 4. FLIPPING & SQUISHING (Fixed Logic)
+
         // A. Determine the base size (Squished if crouching, Normal if standing)
         // We use the boolean directly from the Animator to know if we are crouching
         float sizeX = anim.GetBool("IsCrouching") ? 0.7125f : 1f; 
@@ -153,6 +199,16 @@ public class DeerMovement : MonoBehaviour
     
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
         rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+    }
+
+    void StartDash(int direction)
+    {
+        isDashing = true;
+        dashTimer = dashDuration;
+        rb.linearVelocity = new Vector2(direction * dashSpeed, rb.linearVelocity.y);
+
+        // Optional: trigger dash animation if you have one
+        anim.SetTrigger("DashTrigger");
     }
 
     public void Bounce()
