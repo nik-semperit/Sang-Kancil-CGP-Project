@@ -6885,6 +6885,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 793532344}
+  - {fileID: 1799777673}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -180, z: 0}
 --- !u!114 &1007106842
@@ -6899,7 +6900,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ad6da76a97d8da4b955acaf5409ef09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FlowerShooter
-  fireballPrefab: {fileID: 0}
+  fireballPrefab: {fileID: 382637971421922724, guid: 4c465dcae23d47c4681a185b13a8e524, type: 3}
   firePoint: {fileID: 793532344}
   fireballEndPoint: {fileID: 1799777673}
   shootInterval: 2.5
@@ -12470,12 +12471,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1799777672}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.2999992, y: 0.92999995, z: 0}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
+  m_LocalPosition: {x: 42.971085, y: 0.93, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 1007106841}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1830896183
 GameObject:
@@ -13606,6 +13607,67 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 15.197407, y: 2.4053285}
   m_EdgeRadius: 0
+--- !u!1001 &2121176943
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 34.10798
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0187
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 745875378755933619, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1091913421435395984, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_Name
+      value: Game_System
+      objectReference: {fileID: 0}
+    - target: {fileID: 5640352922544039676, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
 --- !u!1 &2124448121
 GameObject:
   m_ObjectHideFlags: 0
@@ -13958,4 +14020,4 @@ SceneRoots:
   - {fileID: 800449824}
   - {fileID: 535986200}
   - {fileID: 1007106841}
-  - {fileID: 1799777673}
+  - {fileID: 2121176943}
