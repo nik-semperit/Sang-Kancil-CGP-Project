@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 6097858636138169124}
   - component: {fileID: 4157631596515854362}
   - component: {fileID: -7176858163886832715}
+  - component: {fileID: -2753477129115813526}
   m_Layer: 8
   m_Name: croc webp_0 (2)
   m_TagString: Untagged
@@ -125,7 +126,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8986764256272587835}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -216,3 +217,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e30d33970d46a84aa3fb5f53b8ef4e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MovingPlatform2
+--- !u!114 &-2753477129115813526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8986764256272587835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fd5bf6872cf38b4d9d63e859c8e14ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  damageToPlayer: 5

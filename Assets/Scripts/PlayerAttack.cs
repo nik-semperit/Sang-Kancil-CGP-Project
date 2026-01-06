@@ -22,4 +22,7 @@ public class PlayerAttack : MonoBehaviour
     {
         Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
     }
+
+    
+
 }

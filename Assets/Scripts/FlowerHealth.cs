@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+using CodeMonkey.HealthSystemCM;
+using UnityEngine;
 
-public class DeerHealth : MonoBehaviour
+public class FlowerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int currentHealth;
+    private int currentHealth;
 
-    public PlayerHealthBar healthBar; // 🔥 UI reference
-
+    public HealthBar healthBar;   // your slider-based health bar
     private bool isDead = false;
 
     void Start()
@@ -14,7 +14,9 @@ public class DeerHealth : MonoBehaviour
         currentHealth = maxHealth;
 
         if (healthBar != null)
+        {
             healthBar.SetMaxHealth(maxHealth);
+        }
     }
 
     public void TakeDamage(int damage)
@@ -25,7 +27,9 @@ public class DeerHealth : MonoBehaviour
         currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         if (healthBar != null)
+        {
             healthBar.SetHealth(currentHealth);
+        }
 
         if (currentHealth <= 0)
         {
@@ -33,26 +37,11 @@ public class DeerHealth : MonoBehaviour
         }
     }
 
-    public void HealToFull()
-    {
-        if (isDead) return;
-
-        currentHealth = maxHealth;
-
-        if (healthBar != null)
-            healthBar.SetHealth(currentHealth); // 🔥 THIS WAS MISSING
-    }
-
-
     void Die()
     {
         isDead = true;
 
-        if (GameManagerReworked.Instance != null)
-        {
-            GameManagerReworked.Instance.TriggerGameOver("Player");
-        }
-
+        // optional: death animation / particles
         Destroy(gameObject);
     }
 }

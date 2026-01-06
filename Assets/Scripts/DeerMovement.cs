@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class DeerMovement : MonoBehaviour
 {
@@ -26,7 +26,9 @@ public class DeerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    public float checkRadius = 0.2f; 
+    public float checkRadius = 0.2f;
+
+    public bool oneTimeTripleJump = false;
 
 
 
@@ -76,7 +78,13 @@ public class DeerMovement : MonoBehaviour
             else if (extraJumps > 0)
             {
                 PerformJump();
-                extraJumps--; 
+                extraJumps--;
+
+                if (extraJumps <= 0 && oneTimeTripleJump)
+                {
+                    extraJumpsValue = 1;   // BACK TO DOUBLE JUMP
+                    oneTimeTripleJump = false;
+                }
             }
         }
         
@@ -129,6 +137,8 @@ public class DeerMovement : MonoBehaviour
             }
             anim.SetBool("IsCrouching", false);
         }
+
+        
     } 
 
     void PerformJump()
