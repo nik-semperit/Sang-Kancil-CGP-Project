@@ -1,7 +1,16 @@
 ﻿using UnityEngine;
 
 public class DeerMovement : MonoBehaviour
-{
+{   
+
+    [Header("Jump Effect")]
+    public GameObject jumpEffect;
+    public Transform jumpEffectPoint; // Empty GameObject under feet
+
+    [Header("Ground Effects")]
+    public GameObject groundMoveEffect; // Drag the "Dust" prefab here
+    public Transform effectSpawnPoint;  // Drag the "FeetPos" object here
+
     [Header("Crouch")]
     public BoxCollider2D standingCollider;
     public float crouchHeight = 0.5f;
@@ -43,6 +52,14 @@ public class DeerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public float checkRadius = 0.2f;
+
+
+
+    
+    // Safety timer to prevent game crash from too many particles
+    public float dustRate = 0.2f; 
+    private float nextDustTime;
+
 
     public Animator anim;
 
@@ -109,6 +126,8 @@ public class DeerMovement : MonoBehaviour
         // ================= JUMP =================
         if (Input.GetButtonDown("Jump"))
         {
+            PlayJumpEffect();
+
             if (isGrounded)
             {
                 PerformJump();
@@ -239,4 +258,32 @@ public class DeerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
             damageTimer = 0f;
     }
+
+    private void PlayGroundEffect()
+    {
+        // Check if we have an effect assigned and a spawn point
+        if (groundMoveEffect != null && effectSpawnPoint != null)
+        {
+            // Instantiate the effect at the spawn point's position and rotation
+            GameObject effect = Instantiate(groundMoveEffect, effectSpawnPoint.position, effectSpawnPoint.rotation);
+            
+            // Destroy the effect object after 1 second to keep the hierarchy clean
+            Destroy(effect, 1.0f); 
+        }
+    }
+
+    private void PlayJumpEffect()
+    {
+        // Check if we have a jump effect assigned
+        if (jumpEffect != null && jumpEffectPoint != null)
+        {
+            // Instantiate the jump "poof" at the feet of the deer
+            GameObject effect = Instantiate(jumpEffect, jumpEffectPoint.position, Quaternion.identity);
+            
+            // Destroy the effect after it finishes playing
+            Destroy(effect, 1.0f);
+        }
+    }
+
+
 }
