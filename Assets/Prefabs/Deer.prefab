@@ -236,6 +236,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ed45e29e1dd90147b3dd843850fa9c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  jumpEffect: {fileID: 6848370788301920967}
+  jumpEffectPoint: {fileID: 3665481381325776920, guid: a0b197e96760a194ca483ccf0eecea9e, type: 3}
+  groundMoveEffect: {fileID: 6848370788301920967}
+  effectSpawnPoint: {fileID: 3665481381325776920, guid: a0b197e96760a194ca483ccf0eecea9e, type: 3}
   standingCollider: {fileID: 4756327382633694041}
   crouchHeight: 0.5
   originalHeight: 0
@@ -246,13 +250,19 @@ MonoBehaviour:
   jumpForce: 9
   bounceForce: 10
   bounceSideForce: 5
+  dashSpeed: 15
+  dashDuration: 0.15
+  dashCooldown: 0.5
+  doubleTapTime: 0.25
   extraJumpsValue: 1
+  oneTimeTripleJump: 0
   rb: {fileID: 0}
   groundCheck: {fileID: 6476558519998276045}
   groundLayer:
     serializedVersion: 2
     m_Bits: 320
   checkRadius: 0.2
+  dustRate: 0.2
   anim: {fileID: 0}
 --- !u!82 &92536419786229913
 AudioSource:
