@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class DeerMovement : MonoBehaviour
 {
@@ -42,9 +42,6 @@ public class DeerMovement : MonoBehaviour
     public Transform groundCheck;
     public LayerMask groundLayer;
     public float checkRadius = 0.2f;
-
-    public bool oneTime
-    Jump = false;
 
     [Header("Ground Effects")]
     public GameObject groundMoveEffect;
@@ -104,13 +101,7 @@ public class DeerMovement : MonoBehaviour
             else if (extraJumps > 0)
             {
                 PerformJump();
-                extraJumps--;
-
-                if (extraJumps <= 0 && oneTimeTripleJump)
-                {
-                    extraJumpsValue = 1;   // BACK TO DOUBLE JUMP
-                    oneTimeTripleJump = false;
-                }
+                extraJumps--; 
             }
         }
 
@@ -186,8 +177,24 @@ public class DeerMovement : MonoBehaviour
             anim.SetBool("IsCrouching", false);
         }
 
-        
-    } 
+        // 6. GROUND MOVE EFFECT
+        if (isGrounded && Mathf.Abs(moveInput) > 0.1f)
+        {
+            Instantiate(groundMoveEffect, effectSpawnPoint.position, Quaternion.identity);
+        }
+
+        // DASH TIMER
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+            }
+        }
+
+
+    }
 
     void PerformJump()
     {

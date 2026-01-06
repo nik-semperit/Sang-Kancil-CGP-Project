@@ -4,6 +4,7 @@ public class EnemyProjectile2 : MonoBehaviour
 {
     public float speed = 7f;
     public int damage = 25;
+    public float lifeTime = 3f;
     public Transform endPoint;
 
     private Rigidbody2D rb;
@@ -11,6 +12,11 @@ public class EnemyProjectile2 : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
+        Destroy(gameObject, lifeTime);
     }
 
     void Update()
@@ -21,12 +27,10 @@ public class EnemyProjectile2 : MonoBehaviour
             return;
         }
 
-        // Move toward endpoint
-        Vector2 dir = (endPoint.position - transform.position).normalized;
-        rb.linearVelocity = dir * speed;
+        Vector2 target = endPoint.position;
+        rb.linearVelocity = (target - (Vector2)transform.position).normalized * speed;
 
-        // 🔥 STOP AT BOUNDARY
-        if (Vector2.Distance(transform.position, endPoint.position) < 0.2f)
+        if (Vector2.Distance(transform.position, endPoint.position) < 0.1f)
         {
             Destroy(gameObject);
         }
@@ -36,9 +40,11 @@ public class EnemyProjectile2 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            DeerHealth player = other.GetComponent<DeerHealth>();
-            if (player != null)
-                player.TakeDamage(damage);
+            DeerHealth health = other.GetComponent<DeerHealth>();
+            if (health != null)
+            {
+                health.TakeDamage(damage);
+            }
 
             Destroy(gameObject);
         }
