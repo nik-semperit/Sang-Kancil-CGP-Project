@@ -6526,6 +6526,8 @@ MonoBehaviour:
   leftPoint: {fileID: 1325602535}
   rightPoint: {fileID: 366016862}
   speed: 2
+  floatStrength: 0.2
+  floatSpeed: 1.5
 --- !u!212 &902346553
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8228,6 +8230,8 @@ MonoBehaviour:
   leftPoint: {fileID: 790114168}
   rightPoint: {fileID: 963016478}
   speed: 2
+  floatStrength: 0.2
+  floatSpeed: 1.5
 --- !u!212 &1612053448
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -13991,6 +13995,10 @@ PrefabInstance:
     - target: {fileID: 1150721235132993708, guid: 2901e0fc498fac24dad782c546abb2a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1458495226440186245, guid: 2901e0fc498fac24dad782c546abb2a7, type: 3}
+      propertyPath: nextLevelName
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 8881497568054028019, guid: 2901e0fc498fac24dad782c546abb2a7, type: 3}
       propertyPath: m_Name

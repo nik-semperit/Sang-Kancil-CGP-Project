@@ -18,11 +18,24 @@ public class DeerMovement : MonoBehaviour
     public float bounceForce = 1f;
     public float bounceSideForce = 1f;
 
+    [Header("Dash")]
+    public float dashSpeed = 15f;
+    public float dashDuration = 0.15f;
+    public float dashCooldown = 0.5f;
+    public float doubleTapTime = 0.25f;
+
+    private bool isDashing;
+    private float dashTimer;
+    private float lastDashTime;
+    private float lastLeftTapTime;
+    private float lastRightTapTime;
+    private int dashDirection;
+
     [Header("Jump Settings")]
-    public int extraJumpsValue = 1;   // 🔹 DEFAULT = DOUBLE JUMP
+    public int extraJumpsValue = 1;   // Default = Double Jump
     private int extraJumps;
 
-    // 🔥 ONE-TIME TRIPLE JUMP CONTROL
+    // One-time triple jump
     [HideInInspector] public bool oneTimeTripleJump = false;
 
     [Header("Physics & Detection")]
@@ -51,21 +64,49 @@ public class DeerMovement : MonoBehaviour
     void Update()
     {
         float moveInput = Input.GetAxisRaw("Horizontal");
-        bool isGrounded = Physics2D.OverlapCircle(groundCheck.position, checkRadius, groundLayer);
+        bool isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position, checkRadius, groundLayer);
 
-        // 🔁 Reset jumps when grounded
+        // Reset jumps when grounded
         if (isGrounded)
-        {
             extraJumps = extraJumpsValue;
+
+        // ================= DASH INPUT =================
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (Time.time - lastLeftTapTime <= doubleTapTime &&
+                Time.time >= lastDashTime + dashCooldown)
+            {
+                StartDash(-1);
+            }
+            lastLeftTapTime = Time.time;
         }
 
-        // Movement
-        if (!anim.GetBool("IsCrouching"))
-            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
-        else
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (Time.time - lastRightTapTime <= doubleTapTime &&
+                Time.time >= lastDashTime + dashCooldown)
+            {
+                StartDash(1);
+            }
+            lastRightTapTime = Time.time;
+        }
 
-        // Jump
+        // ================= MOVEMENT =================
+        if (isDashing)
+        {
+            rb.linearVelocity = new Vector2(dashDirection * dashSpeed, 0f);
+        }
+        else if (!anim.GetBool("IsCrouching"))
+        {
+            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+        }
+
+        // ================= JUMP =================
         if (Input.GetButtonDown("Jump"))
         {
             if (isGrounded)
@@ -77,31 +118,34 @@ public class DeerMovement : MonoBehaviour
                 PerformJump();
                 extraJumps--;
 
-                // 🔥 AFTER USING TRIPLE JUMP ONCE → RESET
+                // Reset triple jump after one use
                 if (extraJumps <= 0 && oneTimeTripleJump)
                 {
-                    extraJumpsValue = 1;   // BACK TO DOUBLE JUMP
+                    extraJumpsValue = 1;
                     oneTimeTripleJump = false;
                 }
             }
         }
 
-        // Direction
+        // ================= FACING DIRECTION =================
         if (moveInput > 0)
             transform.rotation = Quaternion.Euler(0, 180, 0);
         else if (moveInput < 0)
             transform.rotation = Quaternion.Euler(0, 0, 0);
 
+        // ================= ANIMATION =================
         anim.SetFloat("Speed", Mathf.Abs(moveInput));
         anim.SetBool("IsGrounded", isGrounded);
 
-        // Crouch
+        // ================= CROUCH =================
         if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
             if (standingCollider != null)
             {
-                standingCollider.size = new Vector2(standingCollider.size.x, crouchHeight);
-                standingCollider.offset = new Vector2(0, (crouchHeight - originalHeight) / 2);
+                standingCollider.size =
+                    new Vector2(standingCollider.size.x, crouchHeight);
+                standingCollider.offset =
+                    new Vector2(0, (crouchHeight - originalHeight) / 2);
             }
             anim.SetBool("IsCrouching", true);
         }
@@ -109,10 +153,19 @@ public class DeerMovement : MonoBehaviour
         {
             if (standingCollider != null)
             {
-                standingCollider.size = new Vector2(standingCollider.size.x, originalHeight);
+                standingCollider.size =
+                    new Vector2(standingCollider.size.x, originalHeight);
                 standingCollider.offset = Vector2.zero;
             }
             anim.SetBool("IsCrouching", false);
+        }
+
+        // ================= DASH TIMER =================
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0f)
+                isDashing = false;
         }
     }
 
@@ -126,25 +179,29 @@ public class DeerMovement : MonoBehaviour
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
     }
 
+    void StartDash(int direction)
+    {
+        isDashing = true;
+        dashDirection = direction;
+        dashTimer = dashDuration;
+        lastDashTime = Time.time;
+
+        rb.linearVelocity = Vector2.zero;
+    }
+
     public void Bounce()
     {
-        // Play hurt sound
-        if (hurtSound != null && audioSource != null)
+        if (hurtSound && audioSource)
             audioSource.PlayOneShot(hurtSound);
 
-        // Reset current velocity
         rb.linearVelocity = Vector2.zero;
-
-        // Trigger jump animation
         anim.SetTrigger("JumpTrigger");
 
-        // Add upward + slight sideways force
         float randomX = Random.Range(-bounceSideForce, bounceSideForce);
         rb.AddForce(new Vector2(randomX, bounceForce), ForceMode2D.Impulse);
     }
 
-
-    // 🔥 DAMAGE CROC WHEN STANDING ON IT
+    // ================= DAMAGE CROC =================
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (!collision.gameObject.CompareTag("Enemy"))
@@ -161,11 +218,15 @@ public class DeerMovement : MonoBehaviour
 
                 if (damageTimer >= damageCooldown)
                 {
-                    CrocHealth2 croc = collision.gameObject.GetComponent<CrocHealth2>();
+                    CrocHealth2 croc =
+                        collision.gameObject.GetComponent<CrocHealth2>();
+
                     if (croc != null)
                         croc.TakeDamage(10);
 
-                    rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 0.6f);
+                    rb.linearVelocity =
+                        new Vector2(rb.linearVelocity.x, jumpForce * 0.6f);
+
                     damageTimer = 0f;
                 }
                 break;
