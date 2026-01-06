@@ -16,7 +16,22 @@ public class DeerMovement : MonoBehaviour
     public float moveSpeed = 5f;
     public float jumpForce = 10f; 
     public float bounceForce = 1f;
-    public float bounceSideForce = 1f; 
+    public float bounceSideForce = 1f;
+
+    [Header("Dash")]
+    public float dashSpeed = 15f;
+    public float dashDuration = 0.15f;
+    public float dashCooldown = 0.5f;
+    public float doubleTapTime = 0.25f;
+
+    private bool isDashing;
+    private float dashTimer;
+    private float lastDashTime;
+
+    private float lastLeftTapTime;
+    private float lastRightTapTime;
+    private int dashDirection;
+
 
     [Header("Double Jump")]
     public int extraJumpsValue = 1; 
@@ -26,9 +41,15 @@ public class DeerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    public float checkRadius = 0.2f; 
+    public float checkRadius = 0.2f;
 
+    [Header("Ground Effects")]
+    public GameObject groundMoveEffect;
+    public Transform effectSpawnPoint;
 
+    [Header("Jump Effect")]
+    public GameObject jumpEffect;
+    public Transform jumpEffectPoint; // Empty GameObject under feet
 
 
 
@@ -57,11 +78,15 @@ public class DeerMovement : MonoBehaviour
         }
 
         // 2. MOVEMENT LOGIC
-        if (!anim.GetBool("IsCrouching")) 
+        if (isDashing)
+        {
+            rb.linearVelocity = new Vector2(dashDirection * dashSpeed, 0f);
+        }
+        else if (!anim.GetBool("IsCrouching"))
         {
             rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
         }
-        else 
+        else
         {
             rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
         }
@@ -79,7 +104,29 @@ public class DeerMovement : MonoBehaviour
                 extraJumps--; 
             }
         }
-        
+
+        // DASH INPUT (Double Tap Left / Right Arrow)
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            if (Time.time - lastLeftTapTime <= doubleTapTime &&
+                Time.time >= lastDashTime + dashCooldown)
+            {
+                StartDash(-1);
+            }
+            lastLeftTapTime = Time.time;
+        }
+
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            if (Time.time - lastRightTapTime <= doubleTapTime &&
+                Time.time >= lastDashTime + dashCooldown)
+            {
+                StartDash(1);
+            }
+            lastRightTapTime = Time.time;
+        }
+
+
         // 4. FLIPPING & SQUISHING (FIXED LOGIC)
 
         // A. Handle Squish (Crouching) - ALWAYS KEEP SCALE POSITIVE
@@ -129,10 +176,33 @@ public class DeerMovement : MonoBehaviour
             }
             anim.SetBool("IsCrouching", false);
         }
-    } 
+
+        // 6. GROUND MOVE EFFECT
+        if (isGrounded && Mathf.Abs(moveInput) > 0.1f)
+        {
+            Instantiate(groundMoveEffect, effectSpawnPoint.position, Quaternion.identity);
+        }
+
+        // DASH TIMER
+        if (isDashing)
+        {
+            dashTimer -= Time.deltaTime;
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+            }
+        }
+
+
+    }
 
     void PerformJump()
     {
+        if (jumpEffect != null && jumpEffectPoint != null)
+        {
+            Instantiate(jumpEffect, jumpEffectPoint.position, Quaternion.identity);
+        }
+
         if (jumpSound != null && audioSource != null)
             audioSource.PlayOneShot(jumpSound);
 
@@ -142,6 +212,21 @@ public class DeerMovement : MonoBehaviour
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); 
         rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
     }
+
+    void StartDash(int direction)
+    {
+        isDashing = true;
+        dashDirection = direction;
+        dashTimer = dashDuration;
+        lastDashTime = Time.time;
+
+        // Cancel vertical movement for a sharp dash
+        rb.linearVelocity = Vector2.zero;
+
+        // Optional animation trigger
+        // anim.SetTrigger("Dash");
+    }
+
 
     public void Bounce()
     {
