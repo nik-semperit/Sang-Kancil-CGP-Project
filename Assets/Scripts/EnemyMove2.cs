@@ -5,7 +5,9 @@ public class EnemyMove_2 : MonoBehaviour
     public Transform leftPoint;
     public Transform rightPoint;
     public float speed = 2f;
-
+    private Vector2 startPos; 
+    public float floatStrength = 0.2f; 
+    public float floatSpeed = 1.5f;
     private Rigidbody2D rb;
     private bool movingRight = true;
 
@@ -17,12 +19,18 @@ public class EnemyMove_2 : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
+
+        startPos = rb.position;
     }
 
     void FixedUpdate()
     {
+        // Floating motion
+        float floatOffset = Mathf.Sin(Time.time * floatSpeed) * floatStrength;
+        Vector2 floatPosition = new Vector2(rb.position.x, startPos.y + floatOffset);
+
         // Move using physics (better for platforms)
-        rb.MovePosition(rb.position + new Vector2(CurrentSpeed, 0) * Time.fixedDeltaTime);
+        rb.MovePosition(floatPosition + new Vector2(CurrentSpeed, 0) * Time.fixedDeltaTime);
 
         // Turning points
         if (movingRight && transform.position.x >= rightPoint.position.x)
