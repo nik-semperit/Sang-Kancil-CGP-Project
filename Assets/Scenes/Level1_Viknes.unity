@@ -4650,6 +4650,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF Village Props - Platform 02 X3
       objectReference: {fileID: 0}
+    - target: {fileID: 5200783512062404884, guid: 8f0b414806fcbda47b9f242883104bb5, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -9454,6 +9458,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PF Village Props - Platform 01 R X1
       objectReference: {fileID: 0}
+    - target: {fileID: 6072232795771451288, guid: faa8413b1d9e4cd48ab117de84514e7c, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6072232795771451290, guid: faa8413b1d9e4cd48ab117de84514e7c, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.53
@@ -10716,6 +10724,10 @@ MonoBehaviour:
   jumpForce: 9
   bounceForce: 10
   bounceSideForce: 5
+  dashSpeed: 15
+  dashDuration: 0.15
+  dashCooldown: 0.5
+  doubleTapTime: 0.25
   extraJumpsValue: 1
   rb: {fileID: 0}
   groundCheck: {fileID: 1673524011938590212}
