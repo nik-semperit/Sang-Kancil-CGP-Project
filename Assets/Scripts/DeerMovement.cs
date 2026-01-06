@@ -26,9 +26,15 @@ public class DeerMovement : MonoBehaviour
     public Rigidbody2D rb;
     public Transform groundCheck;
     public LayerMask groundLayer;
-    public float checkRadius = 0.2f; 
+    public float checkRadius = 0.2f;
 
+    [Header("Ground Effects")]
+    public GameObject groundMoveEffect;
+    public Transform effectSpawnPoint;
 
+    [Header("Jump Effect")]
+    public GameObject jumpEffect;
+    public Transform jumpEffectPoint; // Empty GameObject under feet
 
 
 
@@ -129,10 +135,22 @@ public class DeerMovement : MonoBehaviour
             }
             anim.SetBool("IsCrouching", false);
         }
-    } 
+
+        // 6. GROUND MOVE EFFECT
+        if (isGrounded && Mathf.Abs(moveInput) > 0.1f)
+        {
+            Instantiate(groundMoveEffect, effectSpawnPoint.position, Quaternion.identity);
+        }
+
+    }
 
     void PerformJump()
     {
+        if (jumpEffect != null && jumpEffectPoint != null)
+        {
+            Instantiate(jumpEffect, jumpEffectPoint.position, Quaternion.identity);
+        }
+
         if (jumpSound != null && audioSource != null)
             audioSource.PlayOneShot(jumpSound);
 
