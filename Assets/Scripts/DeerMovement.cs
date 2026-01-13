@@ -51,13 +51,16 @@ public class DeerMovement : MonoBehaviour
     public GameObject jumpEffect;
     public Transform jumpEffectPoint; // Empty GameObject under feet
 
-
+    private Vector2 checkpointPosition; // Stores the save point
 
     // Animation
     public Animator anim;
 
     void Start()
     {
+
+        checkpointPosition = transform.position;
+
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         extraJumps = extraJumpsValue; 
@@ -288,6 +291,25 @@ public class DeerMovement : MonoBehaviour
         {
             damageTimer = 0f;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Checkpoint"))
+        {
+            // Update the save point to the current location
+            checkpointPosition = transform.position;
+            Debug.Log("Checkpoint Reached!");
+
+            // Optional: Change the checkpoint's color to show it's active
+            other.GetComponent<SpriteRenderer>().color = Color.yellow;
+        }
+    }
+
+    public void Respawn()
+    {
+        // Move the deer back to the saved position
+        transform.position = checkpointPosition;
     }
 
 

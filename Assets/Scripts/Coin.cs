@@ -10,14 +10,13 @@ public class Coin : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Use the NEW class name "GameManagerReworked"
-            if (GameManagerReworked.Instance != null)
+            if (ScoreManager.instance != null)
             {
-                GameManagerReworked.Instance.AddScore(scoreValue);
+                ScoreManager.instance.AddScore(scoreValue);
             }
             else
             {
-                Debug.LogWarning("No GameManagerReworked found! Score not added.");
+                Debug.LogWarning("No ScoreManager found in the scene!");
             }
 
             // Play Sound
