@@ -48,11 +48,28 @@ public class DeerHealth : MonoBehaviour
     {
         isDead = true;
 
-        if (GameManagerReworked.Instance != null)
+        if (CheckpointManager.Instance != null &&
+            CheckpointManager.Instance.HasCheckpoint())
         {
-            GameManagerReworked.Instance.TriggerGameOver("Player");
+            Respawn();
         }
-
-        Destroy(gameObject);
+        else
+        {
+            // No checkpoint → Game Over
+            if (GameManagerReworked.Instance != null)
+                GameManagerReworked.Instance.TriggerGameOver("Player");
+        }
     }
+
+    void Respawn()
+    {
+        currentHealth = maxHealth;
+        isDead = false;
+
+        transform.position = CheckpointManager.Instance.GetCheckpointPosition();
+
+        if (healthBar != null)
+            healthBar.SetHealth(currentHealth);
+    }
+
 }
