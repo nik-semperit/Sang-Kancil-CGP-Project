@@ -19,8 +19,15 @@ public class DeerMovement : MonoBehaviour
     public float bounceSideForce = 1f;
 
     [Header("Jump Settings")]
-    public int extraJumpsValue = 1;   // 🔹 DEFAULT = DOUBLE JUMP
+    public int extraJumpsValue = 1; // default double jump
     private int extraJumps;
+
+    public bool hasTripleJump = false;
+
+    [Header("Stealth")]
+    public bool isHiddenInBush = false;
+
+
 
     // 🔥 ONE-TIME TRIPLE JUMP CONTROL
     [HideInInspector] public bool oneTimeTripleJump = false;
@@ -57,6 +64,13 @@ public class DeerMovement : MonoBehaviour
         if (isGrounded)
         {
             extraJumps = extraJumpsValue;
+
+            // 🔥 Consume triple jump AFTER landing once
+            if (hasTripleJump)
+            {
+                extraJumpsValue = 1; // back to double jump
+                hasTripleJump = false;
+            }
         }
 
         // Movement
@@ -124,6 +138,13 @@ public class DeerMovement : MonoBehaviour
         anim.SetTrigger("JumpTrigger");
         rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
         rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
+    }
+
+    public void ActivateTripleJump()
+    {
+        extraJumpsValue = 2;   // ground + 2 mid-air
+        extraJumps = extraJumpsValue;
+        hasTripleJump = true;
     }
 
     public void Bounce()

@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
@@ -44,6 +44,28 @@ public class Projectile : MonoBehaviour
         else if (hitInfo.gameObject.layer == LayerMask.NameToLayer("Ground"))
         {
             Destroy(gameObject); // Destroy bullet if it hits a wall/floor
+        }
+
+        FlowerHealth flower = hitInfo.GetComponent<FlowerHealth>();
+
+        if (flower == null)
+        {
+            flower = hitInfo.GetComponentInParent<FlowerHealth>();
+        }
+
+        if (flower != null)
+        {
+            flower.TakeDamage(damage);
+            Destroy(gameObject);
+            return;
+        }
+
+        // -------------------------------
+        // 🌍 GROUND / WALL
+        // -------------------------------
+        if (hitInfo.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            Destroy(gameObject);
         }
     }
 }

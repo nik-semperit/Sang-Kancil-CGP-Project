@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class portionjumps3 : MonoBehaviour
+public class potionjump3 : MonoBehaviour
 {
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -10,8 +10,9 @@ public class portionjumps3 : MonoBehaviour
 
             if (deer != null)
             {
-                deer.extraJumpsValue = 2;       // TEMP TRIPLE JUMP
-                deer.oneTimeTripleJump = true; // ONE-TIME ONLY
+                deer.ActivateTripleJump();
+
+                Debug.Log("🧪 Triple Jump READY!");
 
                 Destroy(gameObject);
             }
