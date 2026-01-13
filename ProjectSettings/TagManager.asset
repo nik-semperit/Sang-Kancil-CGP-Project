@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Water
   - Portion
+  - Bush
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - 
   - Enemies
   - groundedCheck
-  - 
+  - Player
   - 
   - 
   - 
@@ -45,17 +46,17 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2431615919
+    locked: 0
+  - name: Foreground
+    uniqueID: 4193713209
+    locked: 0
   - name: Enemies
     uniqueID: 1356462497
     locked: 0
   - name: Player
     uniqueID: 566108229
-    locked: 0
-  - name: Foreground
-    uniqueID: 4193713209
-    locked: 0
-  - name: Background
-    uniqueID: 2431615919
     locked: 0
   m_RenderingLayers:
   - Default
