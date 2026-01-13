@@ -7,7 +7,7 @@ public class DurianSpawner : MonoBehaviour
 
     // Randomize the timing so trees don't drop in sync
     public float minSpawnTime = 2f; 
-    public float maxSpawnTime = 6f;
+    public float maxSpawnTime = 12f;
 
     void Start()
     {

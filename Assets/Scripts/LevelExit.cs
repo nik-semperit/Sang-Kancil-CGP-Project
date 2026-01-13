@@ -1,9 +1,12 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement; // Needed to change levels
 
 public class LevelExit : MonoBehaviour
 {
-    [Header("Audio")]
+    [Header("Settings")]
+    public string nextLevelName; // Type the EXACT name of your next scene here (e.g., "Level2")
+    
+    [Header("Audio (Optional for Rubric)")]
     public AudioSource audioSource;
     public AudioClip exitSound;
 
@@ -11,9 +14,11 @@ public class LevelExit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        // Only the player can trigger the level change
         if (other.CompareTag("Player") && !levelLoading)
         {
-            levelLoading = true;
+            levelLoading = true; // Prevent double triggering
+            Debug.Log("Exiting Level...");
             
             // Play sound if you have one
             if (audioSource != null && exitSound != null)
@@ -27,21 +32,10 @@ public class LevelExit : MonoBehaviour
 
     void LoadNextLevel()
     {
+        // CRITICAL: Ensure time is running (in case you were paused)
         Time.timeScale = 1f;
-
-        // Get the current index (e.g., 1) and add 1 to get the next one (e.g., 2)
-        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-
-        // SAFETY CHECK: Does the next scene actually exist?
-        // If we are at the last level, this prevents a crash by going back to Menu (0)
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
-        {
-            SceneManager.LoadScene(nextSceneIndex);
-        }
-        else
-        {
-            Debug.Log("No more levels! looping back to Main Menu.");
-            SceneManager.LoadScene(0); 
-        }
+        
+        // Load the scene you typed in the Inspector
+        SceneManager.LoadScene(nextLevelName);
     }
 }
