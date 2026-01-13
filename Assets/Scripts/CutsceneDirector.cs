@@ -1,9 +1,16 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI; // <--- VITAL: Allows us to control UI Images
+
 
 public class CutsceneDirector : MonoBehaviour
 {
+
+    [Header("UI")]
+    public Image fadePanel; // <--- Drag your Black Panel here
+    public float fadeSpeed = 1.0f;
+
     [Header("Actors")]
     public CutsceneActor deer;
     
@@ -27,6 +34,7 @@ public class CutsceneDirector : MonoBehaviour
     }
 
     IEnumerator PlayCutscene()
+    
     {
         // --- PHASE 1: PACING (Walking Back and Forth) ---
         Debug.Log("Scene Start: Deer is pacing...");
@@ -78,7 +86,29 @@ public class CutsceneDirector : MonoBehaviour
         // --- PHASE 4: END ---
         Debug.Log("Oh no! Separated!");
         yield return new WaitForSeconds(2.0f);
-        SceneManager.LoadScene("Level 1");
+     
+     // --- PHASE 4: FADE OUT ---
+        Debug.Log("Fading out...");
+        
+        // This block slowly turns the alpha from 0 to 1
+        if (fadePanel != null)
+        {
+            float alpha = 0f;
+            while (alpha < 1f)
+            {
+                alpha += Time.deltaTime * fadeSpeed;
+                // Update the color with the new alpha
+                fadePanel.color = new Color(0, 0, 0, alpha); 
+                yield return null;
+            }
+        }
+        
+        // Wait one extra split second for dramatic effect
+        yield return new WaitForSeconds(0.1f);
+
+        // NOW we load the level
+        SceneManager.LoadScene("Level1_Viknes");
+
     }
 
     // --- HELPER FUNCTION: Makes walking cleaner ---
@@ -104,4 +134,7 @@ public class CutsceneDirector : MonoBehaviour
         // 4. Stop Animation
         deer.anim.SetFloat("Speed", 0f);
     }
+
+
+    
 }
