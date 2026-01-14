@@ -15,9 +15,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Level1_Viknes.unity
     guid: ad62217450f70044a85dcbf1e29de732
   - enabled: 1
-    path: Assets/Scenes/Level2.unity
-    guid: 7c472fe9244c0904480cb817185d0f41
-  - enabled: 1
     path: Assets/Scenes/Level1_Viknes.unity
     guid: ad62217450f70044a85dcbf1e29de732
   - enabled: 1

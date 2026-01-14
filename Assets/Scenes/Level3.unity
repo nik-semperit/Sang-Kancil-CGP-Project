@@ -2686,11 +2686,11 @@ PrefabInstance:
     - target: {fileID: 5239447320384303895, guid: 7a16269e32dcec24c8682596c3366f77, type: 3}
       propertyPath: choiceManager
       value: 
-      objectReference: {fileID: 1295340611}
+      objectReference: {fileID: 987569124}
     - target: {fileID: 5239447320384303895, guid: 7a16269e32dcec24c8682596c3366f77, type: 3}
       propertyPath: interactPrompt
       value: 
-      objectReference: {fileID: 830866392}
+      objectReference: {fileID: 1183621448}
     - target: {fileID: 5239447320384303895, guid: 7a16269e32dcec24c8682596c3366f77, type: 3}
       propertyPath: rewardSpawnPoint
       value: 
@@ -2849,11 +2849,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &830866392 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3714809920478158637, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
-  m_PrefabInstance: {fileID: 522496949}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &833000722
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,6 +2939,17 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &987569124 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7729378139779134133, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+  m_PrefabInstance: {fileID: 522496949}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eab27898c7193e244aca67a117202f54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ChoiceManager
 --- !u!1 &1055875348
 GameObject:
   m_ObjectHideFlags: 0
@@ -7879,6 +7885,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1183032389}
   m_CullTransparentMesh: 1
+--- !u!1 &1183621448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3714809920478158637, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
+  m_PrefabInstance: {fileID: 522496949}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1229993098
 GameObject:
   m_ObjectHideFlags: 0
@@ -7969,17 +7980,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &1295340611 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7729378139779134133, guid: 79251540b8917e24594cfcd3a28c3a68, type: 3}
-  m_PrefabInstance: {fileID: 522496949}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eab27898c7193e244aca67a117202f54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ChoiceManager
 --- !u!1 &1341762621
 GameObject:
   m_ObjectHideFlags: 0
