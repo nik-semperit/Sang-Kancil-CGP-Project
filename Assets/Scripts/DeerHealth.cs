@@ -7,6 +7,8 @@ public class DeerHealth : MonoBehaviour
 
     public PlayerHealthBar healthBar; // 🔥 UI reference
 
+
+    
     private bool isDead = false;
 
     void Start()
