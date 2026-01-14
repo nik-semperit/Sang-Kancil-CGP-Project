@@ -9271,6 +9271,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2038429675}
     - target: {fileID: 4204510519614749395, guid: 9b57e2af71b0a1d489a88cf0a52353b6, type: 3}
+      propertyPath: maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4204510519614749395, guid: 9b57e2af71b0a1d489a88cf0a52353b6, type: 3}
       propertyPath: pointLeft
       value: 
       objectReference: {fileID: 570432048}
@@ -9278,6 +9282,10 @@ PrefabInstance:
       propertyPath: pointRight
       value: 
       objectReference: {fileID: 1723104942}
+    - target: {fileID: 4204510519614749395, guid: 9b57e2af71b0a1d489a88cf0a52353b6, type: 3}
+      propertyPath: damageToDeal
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5798744360799452003, guid: 9b57e2af71b0a1d489a88cf0a52353b6, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.43
