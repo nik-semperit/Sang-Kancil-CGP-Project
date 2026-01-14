@@ -7,8 +7,12 @@ public class DeerHealth : MonoBehaviour
 
     public PlayerHealthBar healthBar; // 🔥 UI reference
 
+    [Header("Death Effect")]
+    public GameObject deathEffect;
+    public float respawnDelay = 0.8f;
 
-    
+
+
     private bool isDead = false;
 
     void Start()
@@ -48,30 +52,47 @@ public class DeerHealth : MonoBehaviour
 
     void Die()
     {
+        if (isDead) return;
         isDead = true;
+
+        // 🔥 Spawn death particle
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
+
+        // Hide player temporarily
+        GetComponent<SpriteRenderer>().enabled = false;
+        GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+        GetComponent<Rigidbody2D>().simulated = false;
 
         if (CheckpointManager.Instance != null &&
             CheckpointManager.Instance.HasCheckpoint())
         {
-            Respawn();
+            Invoke(nameof(Respawn), respawnDelay);
         }
         else
         {
-            // No checkpoint → Game Over
             if (GameManagerReworked.Instance != null)
                 GameManagerReworked.Instance.TriggerGameOver("Player");
         }
     }
 
+
     void Respawn()
     {
+        transform.position = CheckpointManager.Instance.GetCheckpointPosition();
+
         currentHealth = maxHealth;
         isDead = false;
 
-        transform.position = CheckpointManager.Instance.GetCheckpointPosition();
+        // Re-enable player
+        GetComponent<SpriteRenderer>().enabled = true;
+        GetComponent<Rigidbody2D>().simulated = true;
 
         if (healthBar != null)
             healthBar.SetHealth(currentHealth);
     }
+
 
 }
