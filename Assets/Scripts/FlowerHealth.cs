@@ -1,10 +1,13 @@
-using CodeMonkey.HealthSystemCM;
+﻿using CodeMonkey.HealthSystemCM;
 using UnityEngine;
 
 public class FlowerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
     private int currentHealth;
+
+    [Header("Death Effect")]
+    public GameObject deathEffect;
 
     public HealthBar healthBar;   // your slider-based health bar
     private bool isDead = false;
@@ -41,7 +44,13 @@ public class FlowerHealth : MonoBehaviour
     {
         isDead = true;
 
-        // optional: death animation / particles
+        // 🌸 Spawn death particle
+        if (deathEffect != null)
+        {
+            Instantiate(deathEffect, transform.position, Quaternion.identity);
+        }
+
         Destroy(gameObject);
     }
+
 }
