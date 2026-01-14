@@ -11155,6 +11155,8 @@ MonoBehaviour:
   maxHealth: 100
   currentHealth: 0
   healthBar: {fileID: 800449825}
+  deathEffect: {fileID: 305200756111171176, guid: 34e8996265f7a67468c93f0670ba9852, type: 3}
+  respawnDelay: 0.8
 --- !u!114 &1600180028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5271216183326120951, guid: 4aaebac0f43119945b5814ef920acde9, type: 3}
@@ -19241,6 +19243,52 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 433a7aec6f16a5849a257dc68b111039, type: 3}
+--- !u!1 &1661745548
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1661745550}
+  - component: {fileID: 1661745549}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1661745549
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661745548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8228f1cadc0f0804f8c8de8d48b2d1b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ScoreManager
+  scoreText: {fileID: 1402301819}
+  score: 0
+--- !u!4 &1661745550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1661745548}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 22.23292, y: -2.90709, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1664035845
 GameObject:
   m_ObjectHideFlags: 0
@@ -24492,3 +24540,4 @@ SceneRoots:
   - {fileID: 1155821713}
   - {fileID: 447370592}
   - {fileID: 1704189217}
+  - {fileID: 1661745550}
